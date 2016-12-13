@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     >
 
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsTitle"
-        android:text="News Title"
-        style="@style/titleStyle"
-        tools:text="Título" />
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsContentSnippet"
-        android:text="Content Snipet" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:scaleType="centerCrop"
+        />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newsTitle"
+            android:text="News Title"
+            style="@style/titleStyle"
+            tools:text="Título" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/newsAuthorLabel"
-            android:text="@string/author_label" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/newsAuthor"
-            android:text="Author" />
+            android:id="@+id/newsSection"
+            android:text="Section" />
     </LinearLayout>
-
-
 
 </LinearLayout>

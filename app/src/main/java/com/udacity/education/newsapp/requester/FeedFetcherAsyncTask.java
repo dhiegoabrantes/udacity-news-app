@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.udacity.education.newsapp.domain.Feed;
-import com.udacity.education.newsapp.domain.ResponseData;
 import com.udacity.education.newsapp.processor.FeedProcessor;
 
 import java.io.BufferedReader;
@@ -13,11 +12,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by dhiegoabrantes on 20/09/16.
  */
-public class FeedFetcherAsyncTask extends AsyncTask<Object, String, Feed> {
+public class FeedFetcherAsyncTask extends AsyncTask<Object, String, List<Feed>> {
 
     private AsyncTaskDelegator delegate = null;
 
@@ -26,9 +26,10 @@ public class FeedFetcherAsyncTask extends AsyncTask<Object, String, Feed> {
     }
 
     @Override
-    protected Feed doInBackground(Object... objects) {
+    protected List<Feed> doInBackground(Object... objects) {
         try {
-            String urlAPI = "https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=https://www.reddit.com/r/technology/.rss";
+            String urlAPI = "http://content.guardianapis.com/search?q=technology&api-key=2053c5d0-51de-4cba-af73-80ec2f4a3e69&show-fields=thumbnail";
+
             URL url = new URL(urlAPI);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
@@ -42,8 +43,9 @@ public class FeedFetcherAsyncTask extends AsyncTask<Object, String, Feed> {
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-                ResponseData response = FeedProcessor.process(sb.toString());
-                return response.getFeed();
+
+                List<Feed> feeds = FeedProcessor.process(sb.toString());
+                return feeds;
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -67,9 +69,9 @@ public class FeedFetcherAsyncTask extends AsyncTask<Object, String, Feed> {
     }
 
     @Override
-    protected void onPostExecute(Feed feed) {
-        super.onPostExecute(feed);
+    protected void onPostExecute(List<Feed> feeds) {
+        super.onPostExecute(feeds);
         if(delegate != null)
-            delegate.processFinish(feed);
+            delegate.processFinish(feeds);
     }
 }

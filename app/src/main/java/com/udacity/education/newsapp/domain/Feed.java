@@ -8,80 +8,50 @@ import java.util.List;
 
 public class Feed {
 
-    private String feedUrl;
-    private String title;
-    private String link;
-    private String author;
-    private String description;
-    private String type;
-    private List<FeedEntry> entries;
+    private String mTitle;
+    private String mSectionName;
+    private String mThumbnail;
+    private String mUrl;
 
     public Feed() {
     }
 
-    public Feed(String feedUrl, String title, String link, String author, String description, String type, List<FeedEntry> entries) {
-        this.feedUrl = feedUrl;
-        this.title = title;
-        this.link = link;
-        this.author = author;
-        this.description = description;
-        this.type = type;
-        this.entries = entries;
-    }
-
-    public String getFeedUrl() {
-        return feedUrl;
-    }
-
-    public void setFeedUrl(String feedUrl) {
-        this.feedUrl = feedUrl;
+    public Feed(String mTitle, String mSectionName, String mThumbnail, String mUrl) {
+        this.mTitle = mTitle;
+        this.mSectionName = mSectionName;
+        this.mThumbnail = mThumbnail;
+        this.mUrl = mUrl;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
     }
 
-    public String getLink() {
-        return link;
+    public String getSectionName() {
+        return mSectionName;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setSectionName(String mSectionName) {
+        this.mSectionName = mSectionName;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getThumbnail() {
+        return mThumbnail;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setThumbnail(String mThumbnail) {
+        this.mThumbnail = mThumbnail;
     }
 
-    public String getDescription() {
-        return description;
+    public String getUrl() {
+        return mUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public List<FeedEntry> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(List<FeedEntry> entries) {
-        this.entries = entries;
+    public void setUrl(String mUrl) {
+        this.mUrl = mUrl;
     }
 }

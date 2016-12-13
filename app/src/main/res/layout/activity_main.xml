@@ -20,7 +20,8 @@
         android:layout_height="match_parent"
         android:id="@+id/painel_internet_connection_unavailable"
         android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"

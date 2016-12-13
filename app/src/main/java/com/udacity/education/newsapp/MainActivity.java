@@ -23,24 +23,30 @@ import com.udacity.education.newsapp.requester.FeedFetcherAsyncTask;
 import com.udacity.education.newsapp.ui.recycler.DividerItemDecoration;
 import com.udacity.education.newsapp.util.Utils;
 
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements AsyncTaskDelegator {
 
-    private RecyclerView recyclerView;
+    @BindView(R.id.recyclerViewBooks) RecyclerView recyclerView;
+    @BindView(R.id.refreshButton) Button refreshButton;
+
     private LinearLayoutManager mLayoutManager;
     private FeedAdapter mAdapter;
-    private Feed feed;
-    private Button refreshButton;
+    private List<Feed> feeds;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.cathegory)));
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewBooks);
-        refreshButton = (Button) findViewById(R.id.refreshButton);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskDelegato
         }
     }
 
-    private void setupRecyclerAdapter(Feed feed) {
-        mAdapter = new FeedAdapter(feed);
+    private void setupRecyclerAdapter(List<Feed> feeds) {
+        mAdapter = new FeedAdapter(feeds);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -85,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskDelegato
     @Override
     public void processFinish(Object obj) {
         if (obj != null) {
-            this.feed = (Feed) obj;
-            setupRecyclerAdapter(this.feed);
+            this.feeds = (List<Feed>) obj;
+            setupRecyclerAdapter(this.feeds);
 
             findViewById(R.id.recyclerViewBooks).setVisibility(View.VISIBLE);
             findViewById(R.id.painel_internet_connection_unavailable).setVisibility(View.GONE);
