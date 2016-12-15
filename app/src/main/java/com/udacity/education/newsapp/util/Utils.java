@@ -10,6 +10,8 @@ import android.net.NetworkInfo;
 
 public class Utils {
 
+    public static String LOG_TAG = "NEWSAPP";
+
     public static boolean checkConn(Context ctx) {
         ConnectivityManager conMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo i = conMgr.getActiveNetworkInfo();

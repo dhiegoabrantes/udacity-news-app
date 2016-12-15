@@ -1,10 +1,13 @@
 package com.udacity.education.newsapp.requester;
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.udacity.education.newsapp.domain.Feed;
 import com.udacity.education.newsapp.processor.FeedProcessor;
+import com.udacity.education.newsapp.util.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,16 +20,27 @@ import java.util.List;
 /**
  * Created by dhiegoabrantes on 20/09/16.
  */
-public class FeedFetcherAsyncTask extends AsyncTask<Object, String, List<Feed>> {
+public class FeedFetcherAsyncTask extends AsyncTaskLoader<List<Feed>> {
 
-    private AsyncTaskDelegator delegate = null;
+    private List<Feed> mFeeds;
 
-    public FeedFetcherAsyncTask(Context context, AsyncTaskDelegator responder){
-        this.delegate = responder;
+    public FeedFetcherAsyncTask(Context context){
+        super(context);
     }
 
     @Override
-    protected List<Feed> doInBackground(Object... objects) {
+    protected void onStartLoading() {
+        if (mFeeds != null) {
+            // Use cached data
+            deliverResult(mFeeds);
+        } else {
+            // We have no data, so kick off loading it
+            forceLoad();
+        }
+    }
+
+    @Override
+    public List<Feed> loadInBackground() {
         try {
             String urlAPI = "http://content.guardianapis.com/search?q=technology&api-key=2053c5d0-51de-4cba-af73-80ec2f4a3e69&show-fields=thumbnail";
 
@@ -54,8 +68,18 @@ public class FeedFetcherAsyncTask extends AsyncTask<Object, String, List<Feed>> 
         }
         catch(IOException ex){
             ex.printStackTrace();
+            Log.e(Utils.LOG_TAG, ex.getMessage(), ex);
         }
         return null;
+    }
+
+    @Override
+    public void deliverResult(List<Feed> feeds) {
+        // We’ll save the data for later retrieval
+        mFeeds = feeds;
+        // We can do any pre-processing we want here
+        // Just remember this is on the UI thread so nothing lengthy!
+        super.deliverResult(mFeeds);
     }
 
     private void closeResource(BufferedReader br){
@@ -68,10 +92,4 @@ public class FeedFetcherAsyncTask extends AsyncTask<Object, String, List<Feed>> 
         }
     }
 
-    @Override
-    protected void onPostExecute(List<Feed> feeds) {
-        super.onPostExecute(feeds);
-        if(delegate != null)
-            delegate.processFinish(feeds);
-    }
 }
